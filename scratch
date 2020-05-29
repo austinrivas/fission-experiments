@@ -1,0 +1,4 @@
+kubectl --namespace fission get svc router
+kubectl --namespace fission port-forward $(kubectl --namespace fission get pod -l svc=router -o name) 31377:8888 &
+export FISSION_ROUTER=127.0.0.1:30953
+curl ${FISSION_ROUTER}/form

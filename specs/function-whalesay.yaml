@@ -1,0 +1,54 @@
+include:
+- ./fortunewhale/whalesay.sh
+kind: ArchiveUploadSpec
+name: fortunewhale-whalesay-sh-XYL4
+
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: whalesay-4975a109-6dd8-4ad8-bf96-540c52773c95
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+    type: url
+    url: archive://fortunewhale-whalesay-sh-XYL4
+  environment:
+    name: binary
+    namespace: default
+  source:
+    checksum: {}
+status:
+  buildstatus: none
+  lastUpdateTimestamp: "2020-05-29T19:59:46Z"
+
+---
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: whalesay
+  namespace: default
+spec:
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: poolmgr
+      MaxScale: 0
+      MinScale: 0
+      SpecializationTimeout: 120
+      TargetCPUPercent: 0
+    StrategyType: execution
+  configmaps: null
+  environment:
+    name: binary
+    namespace: default
+  functionTimeout: 60
+  idletimeout: 120
+  package:
+    packageref:
+      name: whalesay-4975a109-6dd8-4ad8-bf96-540c52773c95
+      namespace: default
+  resources: {}
+  secrets: null

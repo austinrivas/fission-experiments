@@ -1,0 +1,54 @@
+include:
+- ./fortunewhale/fortunewhale.wf.yaml
+kind: ArchiveUploadSpec
+name: fortunewhale-fortunewhale-wf-yaml-4l6Y
+
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: fortunewhale-6aa753a1-5b29-4d4e-9ff5-78d13f81853d
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+  environment:
+    name: workflow
+    namespace: default
+  source:
+    checksum: {}
+    type: url
+    url: archive://fortunewhale-fortunewhale-wf-yaml-4l6Y
+status:
+  buildstatus: pending
+  lastUpdateTimestamp: "2020-05-29T20:03:10Z"
+
+---
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: fortunewhale
+  namespace: default
+spec:
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: poolmgr
+      MaxScale: 0
+      MinScale: 0
+      SpecializationTimeout: 120
+      TargetCPUPercent: 0
+    StrategyType: execution
+  configmaps: null
+  environment:
+    name: workflow
+    namespace: default
+  functionTimeout: 60
+  idletimeout: 120
+  package:
+    packageref:
+      name: fortunewhale-6aa753a1-5b29-4d4e-9ff5-78d13f81853d
+      namespace: default
+  resources: {}
+  secrets: null

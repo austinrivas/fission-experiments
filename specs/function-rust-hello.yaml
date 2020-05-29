@@ -1,0 +1,54 @@
+include:
+- ./rust-hello/hello
+kind: ArchiveUploadSpec
+name: rust-hello-hello-S5Gx
+
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: rust-hello-10bfb182-00e1-4594-855a-32a1f33459b1
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+    type: url
+    url: archive://rust-hello-hello-S5Gx
+  environment:
+    name: binary
+    namespace: default
+  source:
+    checksum: {}
+status:
+  buildstatus: none
+  lastUpdateTimestamp: "2020-05-29T20:35:43Z"
+
+---
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: rust-hello
+  namespace: default
+spec:
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: poolmgr
+      MaxScale: 0
+      MinScale: 0
+      SpecializationTimeout: 120
+      TargetCPUPercent: 0
+    StrategyType: execution
+  configmaps: null
+  environment:
+    name: binary
+    namespace: default
+  functionTimeout: 60
+  idletimeout: 120
+  package:
+    packageref:
+      name: rust-hello-10bfb182-00e1-4594-855a-32a1f33459b1
+      namespace: default
+  resources: {}
+  secrets: null

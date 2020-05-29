@@ -1,0 +1,55 @@
+include:
+- eval/*
+kind: ArchiveUploadSpec
+name: eval-ssDy
+
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: calc-eval-f3c012ba-8db6-4427-9488-01f40c940116
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+  environment:
+    name: python
+    namespace: default
+  source:
+    checksum: {}
+    type: url
+    url: archive://eval-ssDy
+status:
+  buildstatus: pending
+  lastUpdateTimestamp: "2020-05-28T18:06:26Z"
+
+---
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: calc-eval
+  namespace: default
+spec:
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: poolmgr
+      MaxScale: 0
+      MinScale: 0
+      SpecializationTimeout: 120
+      TargetCPUPercent: 0
+    StrategyType: execution
+  configmaps: null
+  environment:
+    name: python
+    namespace: default
+  functionTimeout: 60
+  idletimeout: 120
+  package:
+    functionName: eval.main
+    packageref:
+      name: calc-eval-f3c012ba-8db6-4427-9488-01f40c940116
+      namespace: default
+  resources: {}
+  secrets: null

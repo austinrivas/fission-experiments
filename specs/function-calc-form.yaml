@@ -1,0 +1,55 @@
+include:
+- form/*
+kind: ArchiveUploadSpec
+name: form-qsY6
+
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: calc-form-1b3eee1d-d920-4fa6-b5d6-f133ecb257a6
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+  environment:
+    name: python
+    namespace: default
+  source:
+    checksum: {}
+    type: url
+    url: archive://form-qsY6
+status:
+  buildstatus: pending
+  lastUpdateTimestamp: "2020-05-28T18:05:56Z"
+
+---
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: calc-form
+  namespace: default
+spec:
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: poolmgr
+      MaxScale: 0
+      MinScale: 0
+      SpecializationTimeout: 120
+      TargetCPUPercent: 0
+    StrategyType: execution
+  configmaps: null
+  environment:
+    name: python
+    namespace: default
+  functionTimeout: 60
+  idletimeout: 120
+  package:
+    functionName: form.main
+    packageref:
+      name: calc-form-1b3eee1d-d920-4fa6-b5d6-f133ecb257a6
+      namespace: default
+  resources: {}
+  secrets: null
